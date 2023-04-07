@@ -35,7 +35,7 @@ public class grades {
         getGrades(driver);
 
         try {
-            Thread.sleep(20 * 1000); // Keep the website running for 20 seconds (20000 milliseconds)
+            Thread.sleep(60 * 1000); // Keep the website running for 60 seconds
         } catch (InterruptedException e) {
             System.out.println("Sleep Interrupted");
         }
