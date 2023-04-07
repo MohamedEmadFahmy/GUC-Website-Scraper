@@ -16,11 +16,12 @@ public class grades {
     public static void main(String[] args) {
         System.setProperty("webdriver.chrome.driver", "C:/Program Files (x86)/chromedriver.exe");
 
-        // Create a new instance of the Chrome driver
+        // Configuring options for driver
         ChromeOptions options = new ChromeOptions();
-        // setting headless mode to true.. so there isn't any ui
-        options.addArguments("headless");
+        options.addArguments("headless"); // setting headless mode to true.. so there isn't any ui
+        options.addArguments("log-level=1"); // sets log level to display only error logs
 
+        // Create a new instance of the Chrome driver
         WebDriver driver = new ChromeDriver(options);
 
         String[] Credentials = getCredentials();
