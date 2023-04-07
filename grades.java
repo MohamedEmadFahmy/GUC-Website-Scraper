@@ -61,7 +61,7 @@ public class grades {
         }
 
         // String gradesLink = driver.getCurrentUrl();
-        // System.out.println();
+        System.out.println();
         System.out.println();
 
         for (int i = 1; i < courseNames.length; i++) {
@@ -85,11 +85,7 @@ public class grades {
             System.out.println();
             System.out.println("----------------------------------");
             System.out.println();
-            // try {
-            // Thread.sleep(500);
-            // } catch (InterruptedException e) {
-            // System.out.println("Sleep Interrupted");
-            // }
+
         }
     }
 
