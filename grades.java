@@ -34,6 +34,9 @@ public class grades {
         driver.get("https://" + username + ":" + password + "@apps.guc.edu.eg/student_ext/Default.aspx");
 
         getGrades(driver);
+        System.out.println();
+        System.out.println("-------------Midterms-------------");
+        getMidterms(driver);
 
         try {
             Thread.sleep(60 * 1000); // Keep the website running for 60 seconds
@@ -43,64 +46,6 @@ public class grades {
 
         // Close the browser
         driver.quit();
-    }
-
-    public static void getGrades(WebDriver driver) {
-        String gradeLink = "https://student.guc.edu.eg/external/student/grade/CheckGrade.aspx";
-        driver.get(gradeLink);
-        WebElement selectCourse = driver.findElement(By.id("smCrsLst"));
-        Select dropdown = new Select(selectCourse);
-        List<WebElement> options = dropdown.getOptions();
-        int numCourses = options.size();
-        String courseNames[] = new String[numCourses];
-
-        int j = 0;
-        for (WebElement option : options) {
-            String optionText = option.getText();
-            courseNames[j] = optionText;
-            j++;
-        }
-
-        // String gradesLink = driver.getCurrentUrl();
-        System.out.println();
-        System.out.println();
-
-        for (int i = 1; i < courseNames.length; i++) {
-            selectCourse = driver.findElement(By.id("smCrsLst"));
-            selectCourse.click();
-            dropdown = new Select(selectCourse);
-            dropdown.selectByVisibleText(courseNames[i] + "");
-            System.out.println(i + ") " + courseNames[i]);
-
-            WebElement gradesTable = null;
-
-            try {
-                System.out.println();
-                gradesTable = driver.findElement(By.id("nttTr"));
-                printTable(gradesTable);
-
-            } catch (NoSuchElementException e) {
-                System.out.println("No table");
-            }
-
-            System.out.println();
-            System.out.println("----------------------------------");
-            System.out.println();
-
-        }
-    }
-
-    public static void printTable(WebElement table) {
-        List<WebElement> rowsList = table.findElements(By.tagName("tr"));
-        List<WebElement> columnsList = null;
-        for (WebElement row : rowsList) {
-            System.out.println();
-            columnsList = row.findElements(By.tagName("td"));
-            for (WebElement column : columnsList) {
-                System.out.print(column.getText() + "   |   ");
-            }
-            System.out.println();
-        }
     }
 
     public static String[] getCredentials() {
@@ -116,4 +61,79 @@ public class grades {
         }
         return Credentials;
     }
+
+    public static void getGrades(WebDriver driver) {
+        String gradeLink = "https://student.guc.edu.eg/external/student/grade/CheckGrade.aspx";
+        driver.get(gradeLink);
+        WebElement selectCourse = driver.findElement(By.id("smCrsLst"));
+        Select dropdown = new Select(selectCourse);
+        List<WebElement> options = dropdown.getOptions();
+        int numCourses = options.size();
+        String courseNames[] = new String[numCourses];
+
+        System.out.println();
+        System.out.println();
+
+        int j = 0;
+        for (WebElement option : options) {
+            String optionText = option.getText();
+            courseNames[j] = optionText;
+            j++;
+        }
+
+        for (int i = 1; i < courseNames.length; i++) {
+            selectCourse = driver.findElement(By.id("smCrsLst"));
+            selectCourse.click();
+            dropdown = new Select(selectCourse);
+            dropdown.selectByVisibleText(courseNames[i] + "");
+            System.out.println(i + ") " + courseNames[i]);
+
+            WebElement gradesTable = null;
+
+            try {
+                System.out.println();
+                gradesTable = driver.findElement(By.id("nttTr"));
+                printTable(gradesTable, "quiz");
+
+            } catch (NoSuchElementException e) {
+                System.out.println("No table");
+            }
+
+            System.out.println();
+            System.out.println("----------------------------------");
+            System.out.println();
+        }
+    }
+
+    public static void printTable(WebElement table, String typeTable) {
+        List<WebElement> rowsList = table.findElements(By.tagName("tr"));
+        List<WebElement> columnsList = null;
+        for (int i = 1; i < rowsList.size(); i++) {
+            WebElement row = rowsList.get(i);
+            System.out.println();
+            columnsList = row.findElements(By.tagName("td"));
+            for (int j = 0; j < columnsList.size(); j++) {
+                WebElement column = columnsList.get(j);
+                if (j != columnsList.size() - 1 || !typeTable.equals("quiz")) {
+                    // System.out.print(column.getText() + " | ");
+                    System.out.print(column.getText());
+                    if (j != columnsList.size() - 1) {
+                        System.out.print("     ");
+                    }
+                }
+                if (typeTable.equals("midterm") && j == columnsList.size() - 1) {
+                    System.out.print("%");
+                }
+            }
+            System.out.println();
+        }
+    }
+
+    public static void getMidterms(WebDriver driver) {
+        String gradeLink = "https://student.guc.edu.eg/external/student/grade/CheckGrade.aspx";
+        driver.get(gradeLink);
+        WebElement table = driver.findElement(By.id("midDg"));
+        printTable(table, "midterm");
+    }
+
 }
