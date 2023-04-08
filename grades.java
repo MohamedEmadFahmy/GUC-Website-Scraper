@@ -17,6 +17,7 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.Select;
 
 public class grades {
+    static Scanner terminalScanner = new Scanner(System.in);
 
     public static void main(String[] args) {
         System.setProperty("webdriver.chrome.driver", "C:/Program Files (x86)/chromedriver.exe");
@@ -51,15 +52,9 @@ public class grades {
         driver.quit(); // Close the webdriver
 
         // Keep the program running until user presses ENTER button
-
-        Scanner sc = new Scanner(System.in);
-        String quit = "";
-
-        do {
-            System.out.println("Press ENTER to quit program");
-            quit = sc.nextLine();
-        } while (!quit.equals(""));
-        sc.close();
+        System.out.println("Press ENTER to quit program");
+        terminalScanner.nextLine();
+        terminalScanner.close();
 
     }
 
@@ -79,18 +74,16 @@ public class grades {
                 FileWriter fileWriter = new FileWriter("Credentials.txt");
                 BufferedWriter writer = new BufferedWriter(fileWriter);
 
-                Scanner sc = new Scanner(System.in);
                 System.out.print("Enter username:  ");
-                String usernameString = sc.nextLine();
+                String usernameString = terminalScanner.nextLine();
                 System.out.print("Enter password:  ");
-                String passwordString = sc.nextLine(); // Takes as input username and password
+                String passwordString = terminalScanner.nextLine(); // Takes as input username and password
 
                 writer.write(usernameString);
                 writer.newLine();
                 writer.write(passwordString); // Writes username and password to Credentials.txt
 
-                writer.close();
-                sc.close(); // Closes BufferedWriter and scanner
+                writer.close(); // Closes BufferedWriter
                 System.out.println("Successfully wrote username and password to Credentials.txt");
                 return getCredentials();
             } catch (IOException e2) {
