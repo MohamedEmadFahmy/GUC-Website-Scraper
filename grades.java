@@ -103,7 +103,15 @@ public class grades {
 
     public static void getGrades(WebDriver driver) {
         String gradeLink = "https://student.guc.edu.eg/external/student/grade/CheckGrade.aspx";
-        driver.get(gradeLink);
+
+        String currentLink = driver.getCurrentUrl();
+        currentLink = currentLink.substring(0, gradeLink.length());
+
+        // Checks to see if on the grades site, if not redirect to the grades site
+        if (!currentLink.equals(gradeLink)) {
+            driver.get(gradeLink);
+        }
+
         WebElement selectCourse = driver.findElement(By.id("smCrsLst"));
         Select dropdown = new Select(selectCourse);
         List<WebElement> options = dropdown.getOptions();
@@ -174,8 +182,7 @@ public class grades {
         String currentLink = driver.getCurrentUrl();
         currentLink = currentLink.substring(0, gradeLink.length());
 
-        // Checks to see if on the grades site, if not redirect to the grades site to
-        // getmidterm data
+        // Checks to see if on the grades site, if not redirect to the grades site
         if (!currentLink.equals(gradeLink)) {
             driver.get(gradeLink);
         }
