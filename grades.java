@@ -23,7 +23,8 @@ public class grades {
 
         // Configuring options for driver
         ChromeOptions options = new ChromeOptions();
-        options.addArguments("headless"); // setting headless mode to true.. so there isn't any ui
+        options.addArguments("headless"); // setting headless mode to true.. so there
+        // isn't any ui
         options.addArguments("log-level=1"); // sets log level to display only error logs
 
         // Create a new instance of the Chrome driver
@@ -43,14 +44,23 @@ public class grades {
         System.out.println("-------------Midterms-------------");
         getMidterms(driver);
 
-        try {
-            Thread.sleep(60 * 1000); // Keep the website running for 60 seconds
-        } catch (InterruptedException e) {
-            System.out.println("Sleep Interrupted");
-        }
+        System.out.println();
+        System.out.println();
 
-        // Close the browser
-        driver.quit();
+        System.out.println("Grade fetch done");
+        driver.quit(); // Close the webdriver
+
+        // Keep the program running until user presses ENTER button
+
+        Scanner sc = new Scanner(System.in);
+        String quit = "";
+
+        do {
+            System.out.println("Press ENTER to quit program");
+            quit = sc.nextLine();
+        } while (!quit.equals(""));
+        sc.close();
+
     }
 
     public static String[] getCredentials() {
@@ -160,7 +170,15 @@ public class grades {
 
     public static void getMidterms(WebDriver driver) {
         String gradeLink = "https://student.guc.edu.eg/external/student/grade/CheckGrade.aspx";
-        driver.get(gradeLink);
+
+        String currentLink = driver.getCurrentUrl();
+        currentLink = currentLink.substring(0, gradeLink.length());
+
+        // Checks to see if on the grades site, if not redirect to the grades site to
+        // getmidterm data
+        if (!currentLink.equals(gradeLink)) {
+            driver.get(gradeLink);
+        }
         WebElement table = driver.findElement(By.id("midDg"));
         printTable(table, "midterm");
     }
