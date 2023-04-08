@@ -1,5 +1,10 @@
+
+// import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -57,7 +62,31 @@ public class grades {
             Credentials[1] = myReader.nextLine();
             myReader.close();
         } catch (FileNotFoundException e) {
-            System.out.println("An error occurred.");
+            try {
+                File myFile = new File("Credentials.txt");
+                myFile.createNewFile(); // Creates Credentials.txt if its not already present
+
+                FileWriter fileWriter = new FileWriter("Credentials.txt");
+                BufferedWriter writer = new BufferedWriter(fileWriter);
+
+                Scanner sc = new Scanner(System.in);
+                System.out.print("Enter username:  ");
+                String usernameString = sc.nextLine();
+                System.out.print("Enter password:  ");
+                String passwordString = sc.nextLine(); // Takes as input username and password
+
+                writer.write(usernameString);
+                writer.newLine();
+                writer.write(passwordString); // Writes username and password to Credentials.txt
+
+                writer.close();
+                sc.close(); // Closes BufferedWriter and scanner
+                System.out.println("Successfully wrote username and password to Credentials.txt");
+                return getCredentials();
+            } catch (IOException e2) {
+                System.out.println("Error while writing to file");
+            }
+
         }
         return Credentials;
     }
