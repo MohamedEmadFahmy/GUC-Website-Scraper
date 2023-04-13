@@ -17,7 +17,11 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.Select;
 
 public class grades {
-    static Scanner terminalScanner = new Scanner(System.in);
+    private static Scanner terminalScanner = new Scanner(System.in);
+    private static String dropdownID = "UnFormMainContent_smCrsLst";
+    private static String quizTableID = "UnFormMainContent_nttTr";
+    private static String midtermTableID = "UnFormMainContent_midDg";
+    private static String gradeLink = "https://apps.guc.edu.eg//student_ext/Grade/CheckGrade.aspx";
 
     public static void main(String[] args) {
         System.setProperty("webdriver.chrome.driver", "C:/Program Files (x86)/chromedriver.exe");
@@ -95,17 +99,15 @@ public class grades {
     }
 
     public static void getGrades(WebDriver driver) {
-        String gradeLink = "https://student.guc.edu.eg/external/student/grade/CheckGrade.aspx";
 
         String currentLink = driver.getCurrentUrl();
-        currentLink = currentLink.substring(0, gradeLink.length());
 
         // Checks to see if on the grades site, if not redirect to the grades site
         if (!currentLink.equals(gradeLink)) {
             driver.get(gradeLink);
         }
 
-        WebElement selectCourse = driver.findElement(By.id("smCrsLst"));
+        WebElement selectCourse = driver.findElement(By.id(dropdownID));
         Select dropdown = new Select(selectCourse);
         List<WebElement> options = dropdown.getOptions();
         int numCourses = options.size();
@@ -122,7 +124,7 @@ public class grades {
         }
 
         for (int i = 1; i < courseNames.length; i++) {
-            selectCourse = driver.findElement(By.id("smCrsLst"));
+            selectCourse = driver.findElement(By.id(dropdownID));
             selectCourse.click();
             dropdown = new Select(selectCourse);
             dropdown.selectByVisibleText(courseNames[i] + "");
@@ -132,7 +134,7 @@ public class grades {
 
             try {
                 System.out.println();
-                gradesTable = driver.findElement(By.id("nttTr"));
+                gradesTable = driver.findElement(By.id(quizTableID));
                 printTable(gradesTable, "quiz");
 
             } catch (NoSuchElementException e) {
@@ -170,16 +172,13 @@ public class grades {
     }
 
     public static void getMidterms(WebDriver driver) {
-        String gradeLink = "https://student.guc.edu.eg/external/student/grade/CheckGrade.aspx";
-
         String currentLink = driver.getCurrentUrl();
-        currentLink = currentLink.substring(0, gradeLink.length());
 
         // Checks to see if on the grades site, if not redirect to the grades site
         if (!currentLink.equals(gradeLink)) {
             driver.get(gradeLink);
         }
-        WebElement table = driver.findElement(By.id("midDg"));
+        WebElement table = driver.findElement(By.id(midtermTableID));
         printTable(table, "midterm");
     }
 
