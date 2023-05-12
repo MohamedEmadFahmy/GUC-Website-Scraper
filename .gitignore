@@ -2,3 +2,4 @@ run.bat
 Credentials.txt
 Java.jar
 todo.txt
+/lib*
