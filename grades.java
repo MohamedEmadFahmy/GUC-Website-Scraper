@@ -41,9 +41,6 @@ public class grades {
         String username = Credentials[0];
         String password = Credentials[1];
 
-        System.out.print("\033[H\033[2J");
-        // System.out.flush();
-
         // Navigate to a webpage
         driver.get("https://" + username + ":" + password + "@student.guc.edu.eg/");
         driver.get("https://" + username + ":" + password + "@apps.guc.edu.eg/student_ext/Default.aspx");
@@ -60,8 +57,10 @@ public class grades {
 
         driver.quit(); // Close the webdriver
         System.out.println("Grade fetch done");
-        System.out.print("\033[H\033[2J");
-        System.out.flush();
+        for (int clear = 0; clear < 1000; clear++) {
+            System.out.println("\b");
+        }
+
         System.out.println(result);
 
         // Keep the program running until user presses ENTER button
