@@ -3,17 +3,21 @@
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
 import java.util.Scanner;
+import java.io.OutputStream;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeDriverService;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.remote.service.DriverService;
 import org.openqa.selenium.support.ui.Select;
 
 public class grades {
@@ -24,11 +28,13 @@ public class grades {
     private static String gradeLink = "https://apps.guc.edu.eg//student_ext/Grade/CheckGrade.aspx";
 
     public static void main(String[] args) {
-        System.setProperty("webdriver.chrome.driver", "C:/Program Files (x86)/chromedriver.exe");
+        // System.setProperty("webdriver.chrome.driver", "C:/Program Files
+        // (x86)/chromedriver.exe");
+        System.setProperty("webdriver.chrome.driver", "chromedriver.exe");
 
         // Configuring options for driver
         ChromeOptions options = new ChromeOptions();
-        options.addArguments("headless"); // setting headless mode to true.. so there
+        // options.addArguments("headless"); // setting headless mode to true.. so there
         // isn't any ui
         options.addArguments("log-level=1"); // sets log level to display only error logs
 
@@ -125,7 +131,7 @@ public class grades {
 
         for (int i = 1; i < courseNames.length; i++) {
             selectCourse = driver.findElement(By.id(dropdownID));
-            selectCourse.click();
+            // selectCourse.click();
             dropdown = new Select(selectCourse);
             dropdown.selectByVisibleText(courseNames[i] + "");
             System.out.println(i + ") " + courseNames[i]);
