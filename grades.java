@@ -57,7 +57,7 @@ public class grades {
 
         driver.quit(); // Close the webdriver
         System.out.println("Grade fetch done");
-        for (int clear = 0; clear < 1000; clear++) {
+        for (int clear = 0; clear < 500; clear++) {
             System.out.println("\b");
         }
 
