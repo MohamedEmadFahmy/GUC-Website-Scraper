@@ -3,7 +3,7 @@
 ## Script to web scrape the GUC Website to obtain Quizzes and Assignments and Midterms grades.
 <br>
 
-# [Overview Video](http://dev.nodeca.com)
+# [Overview Video](https://youtu.be/LnmrYYz9xlI)
 
 <br>
 
