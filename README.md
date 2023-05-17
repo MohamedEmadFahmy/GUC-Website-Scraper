@@ -14,3 +14,4 @@
 + Extract to any location on your pc
 + Right click on run.bat and choose send to Desktop
 + Run the script from the desktop shortcut
++ NOTE: If you password has expired, you have to update it in the Credentials.txt file
